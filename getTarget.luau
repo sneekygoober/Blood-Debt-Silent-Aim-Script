@@ -13,6 +13,8 @@ rp.IgnoreWater = true;
 local npc = workspace.NPCSFolder;
 local bf = workspace.BloodFolder;
 
+rp.FilterDescendantsInstances = {plr.Character, bf:FindFirstChild("Folder#ALWAYSHERE", true), bf:FindFirstChild("Folder#CheckingWalking", true), bf:FindFirstChild("Folder#INVISBARRIERS", true), bf:FindFirstChild("Folder#Spawns", true), bf:FindFirstChild("Folder#TREES", true)};
+
 plr.CharacterAdded:Connect(function(char)
     rp.FilterDescendantsInstances = {char, bf:FindFirstChild("Folder#ALWAYSHERE", true), bf:FindFirstChild("Folder#CheckingWalking", true), bf:FindFirstChild("Folder#INVISBARRIERS", true), bf:FindFirstChild("Folder#Spawns", true), bf:FindFirstChild("Folder#TREES", true)};
 end);
