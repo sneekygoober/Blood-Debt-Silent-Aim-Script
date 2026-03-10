@@ -10,13 +10,11 @@ local rp = RaycastParams.new();
 rp.FilterType = Enum.RaycastFilterType.Exclude;
 rp.IgnoreWater = true;
 
-local isVisible = function(part: BasePart): (boolean, Instance?)
+local isVisible = function(part: BasePart, origin: Vector3): (boolean, Instance?)
     local char = plr.Character;
     if not (char and part) then return false, nil; end;
 
     rp.FilterDescendantsInstances = {char};
-
-    local origin = cam.CFrame.Position;
 
     local dir = part.Position - origin;
     local result: RaycastResult = workspace:Raycast(origin, dir, rp);
@@ -29,7 +27,7 @@ local isVisible = function(part: BasePart): (boolean, Instance?)
     return false, result.Instance;
 end;
 
-local getTarget = function(): BasePart
+local getTarget = function(origin: Vector3): BasePart
     local cPart, cDistance = nil, 300;
 
     for _, player: Player in next, Players:GetPlayers() do
@@ -44,9 +42,9 @@ local getTarget = function(): BasePart
         local pos, onScreen = cam:WorldToViewportPoint(tPart.Position);
         if not onScreen then continue; end;
 
-        local v, nTPart = isVisible(tPart);
+        local v, nTPart = isVisible(tPart, origin);
         if not v then 
-            v, nTPart = isVisible(char.PrimaryPart or char:FindFirstChild("HumanoidRootPart"));
+            v, nTPart = isVisible(char.PrimaryPart or char:FindFirstChild("HumanoidRootPart"), origin);
             if not v then continue; end;
         end;
 
