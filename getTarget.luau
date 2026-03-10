@@ -10,12 +10,24 @@ local rp = RaycastParams.new();
 rp.FilterType = Enum.RaycastFilterType.Exclude;
 rp.IgnoreWater = true;
 
+local npc = workspace.NPCSFolder;
+local bf = workspace.BloodFolder;
+
 local isVisible = function(part: BasePart, origin: Vector3): (boolean, Instance?)
     local char = plr.Character;
     if not (char and part) then return false, nil; end;
 
-    rp.FilterDescendantsInstances = workspace.BloodFolder:QueryDescendants("WedgePart#_glass, Folder#ALWAYSHERE, Folder#CheckingWalking, Folder#INVISBARRIERS, Folder#Spawns, Folder#TREES, Model#deadbodylul");
-    rp.FilterDescendantsInstances[#rp.FilterDescendantsInstances+1] = char;
+    rp.FilterDescendantsInstances = {char};
+    for _, v in next, bf do
+        if v.Name == "_glass" or v.Name == "deadbodylul" then
+            rp.FilterDescendantsInstances[#rp.FilterDescendantsInstances+1] = v;
+        end;
+    end;
+    rp.FilterDescendantsInstances[#rp.FilterDescendantsInstances+1] = bf:QueryDescendants("Folder#ALWAYSHERE")[1];
+    rp.FilterDescendantsInstances[#rp.FilterDescendantsInstances+1] = bf:QueryDescendants("Folder#CheckingWalking")[1];
+    rp.FilterDescendantsInstances[#rp.FilterDescendantsInstances+1] = bf:QueryDescendants("Folder#INVISBARRIERS")[1];
+    rp.FilterDescendantsInstances[#rp.FilterDescendantsInstances+1] = bf:QueryDescendants("Folder#Spawns")[1];
+    rp.FilterDescendantsInstances[#rp.FilterDescendantsInstances+1] = bf:QueryDescendants("Folder#TREES")[1];
 
     local dir = part.Position - origin;
     local result: RaycastResult = workspace:Raycast(origin, dir, rp);
@@ -31,7 +43,7 @@ end;
 local getTarget = function(origin: Vector3): BasePart
     local cPart, cDistance = nil, 300;
 
-    for _, char: Model in next, workspace.NPCSFolder:GetChildren() do
+    for _, char: Model in next, npc:GetChildren() do
         if char == plr.Character or char:FindFirstChildOfClass("ForceField") or (char:FindFirstChild("Humanoid") and char.Humanoid.Health <= 0) then continue; end;
 
         local tPart: BasePart = char:FindFirstChild("Head") or char.PrimaryPart or char:FindFirstChild("HumanoidRootPart");
