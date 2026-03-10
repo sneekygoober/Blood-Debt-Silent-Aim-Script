@@ -17,17 +17,12 @@ local isVisible = function(part: BasePart, origin: Vector3): (boolean, Instance?
     local char = plr.Character;
     if not (char and part) then return false, nil; end;
 
-    rp.FilterDescendantsInstances = {char};
+    rp.FilterDescendantsInstances = {char, bf:FindFirstDescendant("Folder#ALWAYSHERE"), bf:FindFirstDescendant("Folder#CheckingWalking"), bf:FindFirstDescendant("Folder#INVISBARRIERS"), bf:FindFirstDescendant("Folder#Spawns"), bf:FindFirstDescendant("Folder#TREES")};
     for _, v in next, bf:GetChildren() do
         if v.Name == "_glass" or v.Name == "deadbodylul" then
             rp.FilterDescendantsInstances[#rp.FilterDescendantsInstances+1] = v;
         end;
     end;
-    rp.FilterDescendantsInstances[#rp.FilterDescendantsInstances+1] = bf:QueryDescendants("Folder#ALWAYSHERE")[1];
-    rp.FilterDescendantsInstances[#rp.FilterDescendantsInstances+1] = bf:QueryDescendants("Folder#CheckingWalking")[1];
-    rp.FilterDescendantsInstances[#rp.FilterDescendantsInstances+1] = bf:QueryDescendants("Folder#INVISBARRIERS")[1];
-    rp.FilterDescendantsInstances[#rp.FilterDescendantsInstances+1] = bf:QueryDescendants("Folder#Spawns")[1];
-    rp.FilterDescendantsInstances[#rp.FilterDescendantsInstances+1] = bf:QueryDescendants("Folder#TREES")[1];
 
     local dir = part.Position - origin;
     local result: RaycastResult = workspace:Raycast(origin, dir, rp);
