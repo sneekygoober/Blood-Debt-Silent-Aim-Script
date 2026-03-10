@@ -18,7 +18,7 @@ local isVisible = function(part: BasePart, origin: Vector3): (boolean, Instance?
     if not (char and part) then return false, nil; end;
 
     rp.FilterDescendantsInstances = {char};
-    for _, v in next, bf do
+    for _, v in next, bf:GetChildren() do
         if v.Name == "_glass" or v.Name == "deadbodylul" then
             rp.FilterDescendantsInstances[#rp.FilterDescendantsInstances+1] = v;
         end;
