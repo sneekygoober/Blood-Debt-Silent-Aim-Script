@@ -1,0 +1,65 @@
+local cloneref = cloneref or function(i: Instance) return i; end;
+
+local Players: Players = cloneref(game:GetService("Players"));
+local UIS: UserInputService = cloneref(game:GetService("UserInputService"));
+
+local plr = Players.LocalPlayer;
+local cam = workspace.CurrentCamera;
+
+local rp = RaycastParams.new();
+rp.FilterType = Enum.RaycastFilterType.Exclude;
+rp.IgnoreWater = true;
+
+local isVisible = function(part: BasePart): (boolean, Instance?)
+    local char = plr.Character;
+    if not (char and part) then return false, nil; end;
+
+    rp.FilterDescendantsInstances = {char};
+
+    local origin = cam.CFrame.Position;
+
+    local dir = part.Position - origin;
+    local result: RaycastResult = workspace:Raycast(origin, dir, rp);
+    if not result then return true, nil; end;
+
+    if result.Instance:IsDescendantOf(part.Parent) then
+        return true, result.Instance;
+    end;
+
+    return false, result.Instance;
+end;
+
+local getTarget = function(): BasePart
+    local cPart, cDistance = nil, 300;
+
+    for _, player: Player in next, Players:GetPlayers() do
+        if player == plr then continue; end;
+
+        local char = player.Character;
+        if not char or char:FindFirstChildOfClass("ForceField") or (char:FindFirstChild("Humanoid") and char.Humanoid.Health <= 0) then continue; end;
+
+        local tPart: BasePart = char:FindFirstChild("Head") or char.PrimaryPart or char:FindFirstChild("HumanoidRootPart");
+        if not tPart then continue; end;
+
+        local pos, onScreen = cam:WorldToViewportPoint(tPart.Position);
+        if not onScreen then continue; end;
+
+        local v, nTPart = isVisible(tPart);
+        if not v then 
+            v, nTPart = isVisible(char.PrimaryPart or char:FindFirstChild("HumanoidRootPart"));
+            if not v then continue; end;
+        end;
+
+        if nTPart then tPart = nTPart; end;
+
+        local distance = (Vector2.new(pos.X, pos.Y) - UIS:GetMouseLocation()).Magnitude;
+        if distance < cDistance then
+            cPart = tPart;
+            cDistance = distance;
+        end;
+    end;
+
+    return cPart;
+end;
+
+return getTarget;
