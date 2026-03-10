@@ -13,16 +13,12 @@ rp.IgnoreWater = true;
 local npc = workspace.NPCSFolder;
 local bf = workspace.BloodFolder;
 
-local isVisible = function(part: BasePart, origin: Vector3): (boolean, Instance?)
-    local char = plr.Character;
-    if not (char and part) then return false, nil; end;
-
+plr.CharacterAdded:Connect(function(char)
     rp.FilterDescendantsInstances = {char, bf:FindFirstChild("Folder#ALWAYSHERE", true), bf:FindFirstChild("Folder#CheckingWalking", true), bf:FindFirstChild("Folder#INVISBARRIERS", true), bf:FindFirstChild("Folder#Spawns", true), bf:FindFirstChild("Folder#TREES", true)};
-    --[[for _, v in next, bf:GetChildren() do
-        if v.Name == "_glass" or v.Name == "deadbodylul" then
-            rp.FilterDescendantsInstances[#rp.FilterDescendantsInstances+1] = v;
-        end;
-    end;]]
+end);
+
+local isVisible = function(part: BasePart, origin: Vector3): (boolean, Instance?)
+    if not part then return false, nil; end;
 
     local dir = part.Position - origin;
     local result: RaycastResult = workspace:Raycast(origin, dir, rp);
