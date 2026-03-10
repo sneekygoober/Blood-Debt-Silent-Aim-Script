@@ -30,11 +30,8 @@ end;
 local getTarget = function(origin: Vector3): BasePart
     local cPart, cDistance = nil, 300;
 
-    for _, player: Player in next, Players:GetPlayers() do
-        if player == plr then continue; end;
-
-        local char = player.Character;
-        if not char or char:FindFirstChildOfClass("ForceField") or (char:FindFirstChild("Humanoid") and char.Humanoid.Health <= 0) then continue; end;
+    for _, char: Model in next, workspace.NPCSFolder:GetChildren() do
+        if char == plr.Character or char:FindFirstChildOfClass("ForceField") or (char:FindFirstChild("Humanoid") and char.Humanoid.Health <= 0) then continue; end;
 
         local tPart: BasePart = char:FindFirstChild("Head") or char.PrimaryPart or char:FindFirstChild("HumanoidRootPart");
         if not tPart then continue; end;
