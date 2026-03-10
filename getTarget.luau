@@ -14,7 +14,8 @@ local isVisible = function(part: BasePart, origin: Vector3): (boolean, Instance?
     local char = plr.Character;
     if not (char and part) then return false, nil; end;
 
-    rp.FilterDescendantsInstances = {char, unpack(workspace.BloodFolder:QueryDescendants("WedgePart#_glass, Folder#ALWAYSHERE, Folder#CheckingWalking, Folder#INVISBARRIERS, Folder#Spawns, Folder#TREES"))};
+    rp.FilterDescendantsInstances = workspace.BloodFolder:QueryDescendants("WedgePart#_glass, Folder#ALWAYSHERE, Folder#CheckingWalking, Folder#INVISBARRIERS, Folder#Spawns, Folder#TREES");
+    rp.FilterDescendantsInstances[#rp.FilterDescendantsInstances+1] = char;
 
     local dir = part.Position - origin;
     local result: RaycastResult = workspace:Raycast(origin, dir, rp);
