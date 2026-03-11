@@ -13,10 +13,10 @@ rp.IgnoreWater = true;
 local npc = workspace.NPCSFolder;
 local bf = workspace.BloodFolder;
 
-rp.FilterDescendantsInstances = {plr.Character, bf:FindFirstChild("Folder#ALWAYSHERE", true), bf:FindFirstChild("Folder#CheckingWalking", true), bf:FindFirstChild("Folder#INVISBARRIERS", true), bf:FindFirstChild("Folder#Spawns", true), bf:FindFirstChild("Folder#TREES", true)};
+rp.FilterDescendantsInstances = {plr.Character, bf:FindFirstChild("ALWAYSHERE", true), bf:FindFirstChild("CheckingWalking", true), bf:FindFirstChild("INVISBARRIERS", true), bf:FindFirstChild("Spawns", true), bf:FindFirstChild("TREES", true), bf:FindFirstChild("InvisibleWall", true), bf:FindFirstChild("Cleaning windows", true)};
 
 plr.CharacterAdded:Connect(function(char)
-    rp.FilterDescendantsInstances = {char, bf:FindFirstChild("Folder#ALWAYSHERE", true), bf:FindFirstChild("Folder#CheckingWalking", true), bf:FindFirstChild("Folder#INVISBARRIERS", true), bf:FindFirstChild("Folder#Spawns", true), bf:FindFirstChild("Folder#TREES", true)};
+    rp.FilterDescendantsInstances = {char, bf:FindFirstChild("ALWAYSHERE", true), bf:FindFirstChild("CheckingWalking", true), bf:FindFirstChild("INVISBARRIERS", true), bf:FindFirstChild("Spawns", true), bf:FindFirstChild("TREES", true), bf:FindFirstChild("InvisibleWall", true), bf:FindFirstChild("Cleaning windows", true)};
 end);
 
 local isVisible = function(part: BasePart, origin: Vector3): (boolean, Instance?)
