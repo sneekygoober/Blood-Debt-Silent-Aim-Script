@@ -14,9 +14,19 @@ local npc = workspace.NPCSFolder;
 local bf = workspace.BloodFolder;
 
 rp.FilterDescendantsInstances = {plr.Character, bf:FindFirstChild("ALWAYSHERE", true), bf:FindFirstChild("CheckingWalking", true), bf:FindFirstChild("INVISBARRIERS", true), bf:FindFirstChild("Spawns", true), bf:FindFirstChild("TREES", true), bf:FindFirstChild("InvisibleWall", true), bf:FindFirstChild("Cleaning windows", true)};
+for _, v: Instance in next, bf:GetDescendants() do
+    if v.Name:lower():match("window", 1) then
+        rp.FilterDescendantsInstances[#rp.FilterDescendantsInstances+1] = v;
+    end;
+end;
 
 plr.CharacterAdded:Connect(function(char)
     rp.FilterDescendantsInstances = {char, bf:FindFirstChild("ALWAYSHERE", true), bf:FindFirstChild("CheckingWalking", true), bf:FindFirstChild("INVISBARRIERS", true), bf:FindFirstChild("Spawns", true), bf:FindFirstChild("TREES", true), bf:FindFirstChild("InvisibleWall", true), bf:FindFirstChild("Cleaning windows", true)};
+    for _, v: Instance in next, bf:GetDescendants() do
+        if v.Name:lower():match("window", 1) then
+            rp.FilterDescendantsInstances[#rp.FilterDescendantsInstances+1] = v;
+        end;
+    end;
 end);
 
 local isSameTeam = function(char: Model)
