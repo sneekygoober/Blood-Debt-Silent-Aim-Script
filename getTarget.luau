@@ -19,6 +19,13 @@ plr.CharacterAdded:Connect(function(char)
     rp.FilterDescendantsInstances = {char, bf:FindFirstChild("ALWAYSHERE", true), bf:FindFirstChild("CheckingWalking", true), bf:FindFirstChild("INVISBARRIERS", true), bf:FindFirstChild("Spawns", true), bf:FindFirstChild("TREES", true), bf:FindFirstChild("InvisibleWall", true), bf:FindFirstChild("Cleaning windows", true)};
 end);
 
+local isSameTeam = function(char: Model)
+    local pChar = plr.Character;
+    if not pChar then return true; end;
+
+    return (char:FindFirstChild("TEAM1") and pChar:FindFirstChild("TEAM1")) or (char:FindFirstChild("TEAM2") and pChar:FindFirstChild("TEAM2"));
+end;
+
 local isVisible = function(part: BasePart, origin: Vector3): (boolean, Instance?)
     if not part then return false, nil; end;
 
@@ -37,7 +44,7 @@ local getTarget = function(origin: Vector3): BasePart
     local cPart, cDistance = nil, 300;
 
     for _, char: Model in next, npc:GetChildren() do
-        if char == plr.Character or char:FindFirstChildOfClass("ForceField") or (char:FindFirstChild("Humanoid") and char.Humanoid.Health <= 0) or (char:FindFirstChild("PlayerThings") and char.PlayerThings:FindFirstChild("Downed") and char.PlayerThings.Downed.Value) then continue; end;
+        if char == plr.Character or isSameTeam(char) or char:FindFirstChildOfClass("ForceField") or (char:FindFirstChild("Humanoid") and char.Humanoid.Health <= 0) or (char:FindFirstChild("PlayerThings") and char.PlayerThings:FindFirstChild("Downed") and char.PlayerThings.Downed.Value) then continue; end;
 
         local tPart: BasePart = char:FindFirstChild("Head") or char.PrimaryPart or char:FindFirstChild("HumanoidRootPart");
         if not tPart then continue; end;
