@@ -37,7 +37,7 @@ local getTarget = function(origin: Vector3): BasePart
     local cPart, cDistance = nil, 300;
 
     for _, char: Model in next, npc:GetChildren() do
-        if char == plr.Character or char:FindFirstChildOfClass("ForceField") or (char:FindFirstChild("Humanoid") and char.Humanoid.Health <= 0) then continue; end;
+        if char == plr.Character or char:FindFirstChildOfClass("ForceField") or (char:FindFirstChild("Humanoid") and char.Humanoid.Health <= 0) or (char:FindFirstChild("PlayerThings") and char.PlayerThings:FindFirstChild("Downed") and char.PlayerThings.Downed.Value) then continue; end;
 
         local tPart: BasePart = char:FindFirstChild("Head") or char.PrimaryPart or char:FindFirstChild("HumanoidRootPart");
         if not tPart then continue; end;
