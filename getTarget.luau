@@ -12,11 +12,9 @@ rp.IgnoreWater = true;
 
 local npc = workspace.NPCSFolder;
 local bf = workspace.BloodFolder;
-local pTeam = plr.Character and (plr.Character:FindFirstChild("TEAM1") or plr.Character:FindFirstChild("TEAM2") or false) or false;
 
 local setup = function(char: Model)
     if not char then return; end;
-    pTeam = char:FindFirstChild("TEAM1") or char:FindFirstChild("TEAM2") or false;
     rp.FilterDescendantsInstances = {char, bf:FindFirstChild("ALWAYSHERE", true), bf:FindFirstChild("CheckingWalking", true), bf:FindFirstChild("INVISBARRIERS", true), bf:FindFirstChild("Spawns", true), bf:FindFirstChild("TREES", true), bf:FindFirstChild("InvisibleWall", true), bf:FindFirstChild("Cleaning windows", true)};
     for _, v: Instance in next, bf:GetDescendants() do
         if v.Name:lower():match("window", 1) then
@@ -35,11 +33,10 @@ return function(a: boolean)
     end;
 
     local isSameTeam = function(char: Model)
-        if pTeam then return (char:FindFirstChild("TEAM1") and pTeam.Name == "TEAM1") or (char:FindFirstChild("TEAM2") and pTeam.Name == "TEAM2"); end;
         local player = Players:GetPlayerFromCharacter(char);
-        if not player then return true; end;
-
-        return (plr.PlayerGui:FindFirstChild("RSOD") and plr.PlayerGui.RSOD:FindFirstChild("Role") and plr.PlayerGui.RSOD.Role.Text:lower() == "vigilante") and (char:FindFirstChild("weap_cl", true) or player.Backpack:FindFirstChild("weap_cl", true)) or false;
+        if plr.Character then
+            return (char:FindFirstChild("TEAM1") and plr.Character:FindFirstChild("TEAM1")) or (char:FindFirstChild("TEAM2") and plr.Character:FindFirstChild("TEAM2")) or ((plr.PlayerGui:FindFirstChild("RSOD") and plr.PlayerGui.RSOD:FindFirstChild("Role") and plr.PlayerGui.RSOD.Role.Text:lower() == "vigilante") and (char:FindFirstChild("weap_cl", true) or (player and player.Backpack:FindFirstChild("weap_cl", true)) or false) or false);
+        end;
     end;
 
     local isVisible = function(part: BasePart, origin: Vector3): (boolean, Instance?)
