@@ -60,7 +60,7 @@ if restorefunction and isfunctionhooked then
 end;
 ]];
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/sneekygoober/sneeky-s-fov-lib/refs/heads/main/main.luau"))()(300, loadstring(game:HttpGet("https://raw.githubusercontent.com/sneekygoober/Blood-Debt-Silent-Aim-Script/refs/heads/main/getTarget.luau"))()(false));
+loadstring(game:HttpGet("https://raw.githubusercontent.com/sneekygoober/sneeky-s-fov-lib/refs/heads/main/main.luau"))()(300, loadstring(game:HttpGet("https://raw.githubusercontent.com/sneekygoober/Blood-Debt-Silent-Aim-Script/refs/heads/main/getTarget.luau"))()(false), true);
 
 local cache = {};
 local setup = function(char: Model)
