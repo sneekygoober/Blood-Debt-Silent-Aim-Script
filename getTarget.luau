@@ -6,7 +6,7 @@ local UIS: UserInputService = cloneref(game:GetService("UserInputService"));
 local plr = Players.LocalPlayer;
 local cam = workspace.CurrentCamera;
 
-local isMobile = UIS:GetDeviceType() == Enum.DeviceType.Phone;
+local isMobile = UIS.TouchEnabled and not UIS.KeyboardEnabled and not UIS.MouseEnabled;
 
 local rp = RaycastParams.new();
 rp.FilterType = Enum.RaycastFilterType.Exclude;
