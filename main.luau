@@ -112,7 +112,7 @@ local setup = function(char: Model)
 end;
 
 local c: RBXScriptConnection;
-plr.CharacterAdded:Connect(function(char)
+local _ = function(char: Model)
     table.clear(cache);
     if c then c:Disconnect(); c = nil; end;
     c = char.ChildAdded:Connect(function(child)
@@ -120,6 +120,12 @@ plr.CharacterAdded:Connect(function(char)
             setup(char);
         end;
     end);
-end);
+    local g = char:FindFirstChildOfClass("Tool") and char:FindFirstChildOfClass("Tool"):FindFirstChild("Actor") and char:FindFirstChildOfClass("Tool").Actor:FindFirstChild("weap_cl");
+    if g then setup(char); end;
+end;
+
+_(plr.Character);
+
+plr.CharacterAdded:Connect(_);
 
 SG["success"]("Silent aim successfully executed!\nIf you have any issues press F9 or type /console in chat and then send me a screenshot of the console.");
