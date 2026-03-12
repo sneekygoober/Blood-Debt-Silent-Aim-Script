@@ -6,6 +6,8 @@ local UIS: UserInputService = cloneref(game:GetService("UserInputService"));
 local plr = Players.LocalPlayer;
 local cam = workspace.CurrentCamera;
 
+local isMobile = UIS:GetDeviceType() == Enum.DeviceType.Phone;
+
 local rp = RaycastParams.new();
 rp.FilterType = Enum.RaycastFilterType.Exclude;
 rp.IgnoreWater = true;
@@ -73,7 +75,7 @@ return function(a: boolean)
 
             if nTPart then tPart = nTPart; end;
 
-            local distance = (Vector2.new(pos.X, pos.Y) - UIS:GetMouseLocation()).Magnitude;
+            local distance = isMobile and Vector2.new(pos.X, pos.Y).Magnitude or (Vector2.new(pos.X, pos.Y) - UIS:GetMouseLocation()).Magnitude;
             if distance < cDistance then
                 cPart = tPart;
                 cDistance = distance;
