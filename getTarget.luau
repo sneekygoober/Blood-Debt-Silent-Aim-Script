@@ -67,13 +67,15 @@ return function(a: boolean)
             local pos, onScreen = cam:WorldToViewportPoint(tPart.Position);
             if not onScreen then continue; end;
 
-            local v, nTPart = isVisible(tPart, origin);
-            if not v then 
-                v, nTPart = isVisible(char.PrimaryPart or char:FindFirstChild("HumanoidRootPart"), origin);
-                if not v then continue; end;
+            if getgenv().wallcheck then
+                local v, nTPart = isVisible(tPart, origin);
+                if not v then 
+                    v, nTPart = isVisible(char.PrimaryPart or char:FindFirstChild("HumanoidRootPart"), origin);
+                    if not v then continue; end;
+                end;
+    
+                if nTPart then tPart = nTPart; end;
             end;
-
-            if nTPart then tPart = nTPart; end;
 
             local distance = isMobile and Vector2.new(pos.X, pos.Y).Magnitude or (Vector2.new(pos.X, pos.Y) - UIS:GetMouseLocation()).Magnitude;
             if distance < cDistance then
