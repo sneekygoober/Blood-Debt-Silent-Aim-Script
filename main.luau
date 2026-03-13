@@ -69,13 +69,15 @@ local setup = function(char: Model)
     if not gun then return warn("Failed to find gun"); end;
     local a: Actor = gun.Actor;
     if get_actors then
+        local found = false;
         for _, v: Actor in next, get_actors() do
             if v == a then
+                found = true;
                 if not cache[a] then print("Active actor found via get_actors!"); end;
                 break;
             end;
         end;
-        if not a then return warn("Couldn't find active actor!"); end;
+        if not found then return warn("Couldn't find active actor!"); end;
     else
         if not cache[a] then print("Active actor found via search index!"); end;
     end;
