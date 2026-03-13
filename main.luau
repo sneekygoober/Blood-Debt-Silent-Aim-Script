@@ -67,18 +67,16 @@ local setup = function(char: Model)
     task.wait();
     local gun = char:FindFirstChildOfClass("Tool");
     if not gun then return warn("Failed to find gun"); end;
-    local a: Actor;
+    local a: Actor = gun.Actor;
     if get_actors then
         for _, v: Actor in next, get_actors() do
-            if v:IsDescendantOf(gun) then
-                a = v;
+            if v == a then
                 if not cache[a] then print("Active actor found via get_actors!"); end;
                 break;
             end;
         end;
         if not a then return warn("Couldn't find active actor!"); end;
     else
-        a = gun.Actor;
         if not cache[a] then print("Active actor found via search index!"); end;
     end;
     if not a then return warn("Failed to find actor!"); end;
