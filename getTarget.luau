@@ -77,7 +77,7 @@ return function(a: boolean)
                 if nTPart then tPart = nTPart; end;
             end;
 
-            local distance = isMobile and Vector2.new(pos.X, pos.Y).Magnitude or (Vector2.new(pos.X, pos.Y) - UIS:GetMouseLocation()).Magnitude;
+            local distance = (Vector2.new(pos.X, pos.Y) - (isMobile and Vector2.new(cam.ViewportSize.X/2, cam.ViewportSize.Y/2) or UIS:GetMouseLocation())).Magnitude;
             if distance < cDistance then
                 cPart = tPart;
                 cDistance = distance;
