@@ -12,6 +12,8 @@ if not (hookfunction and require and run_on_actor) then
     return error(err);
 end;
 
+if not (setthreadidentity and setidentity) then SG["info"]("You may experience issues because you do not have setthreadidentity/setidentity! If you do, it's best to switch executors."); end;
+
 local Players: Players = cloneref(game:GetService("Players"));
 
 local plr = Players.LocalPlayer;
@@ -25,7 +27,11 @@ if not (npc and bf) then
 end;
 
 local payload = [[
-print("Injected");
+if setthreadidentity then
+    setthreadidentity(8);
+elseif setidentity then
+    setidentity(8);
+end;
 
 local cloneref = cloneref or function(i: Instance) return i; end;
 local clonefunction = clonefunction or function(f: (...any) -> (...any)) return f; end;
