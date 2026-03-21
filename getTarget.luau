@@ -36,7 +36,7 @@ return function(a: boolean)
 
     local isSameTeam = function(char: Model)
         if plr.Character then
-            return (char:FindFirstChild("TEAM1") and plr.Character:FindFirstChild("TEAM1")) or (char:FindFirstChild("TEAM2") and plr.Character:FindFirstChild("TEAM2")) or ((char:GetAttribute("Team") and plr.Character:GetAttribute("Team")) and char:GetAttribute("Team") == plr.Character:GetAttribute("Team")) or (char:FindFirstChild("BLAHAHAHAHH") and not plr.Character:FindFirstChild("BLAHAHAHAHH"))--[[ or ((plr.PlayerGui:FindFirstChild("RSOD") and plr.PlayerGui.RSOD:FindFirstChild("Role") and plr.PlayerGui.RSOD.Role.Text:lower() == "vigilante") and (char:FindFirstChild("weap_cl", true) or (player and player.Backpack:FindFirstChild("weap_cl", true)) or false) or false)]];
+            return (char:FindFirstChild("TEAM1") and plr.Character:FindFirstChild("TEAM1")) or (char:FindFirstChild("TEAM2") and plr.Character:FindFirstChild("TEAM2")) or ((char:GetAttribute("Team") and plr.Character:GetAttribute("Team")) and char:GetAttribute("Team") == plr.Character:GetAttribute("Team"))--[[ or (char:FindFirstChild("BLAHAHAHAHH") and not plr.Character:FindFirstChild("BLAHAHAHAHH")) or ((plr.PlayerGui:FindFirstChild("RSOD") and plr.PlayerGui.RSOD:FindFirstChild("Role") and plr.PlayerGui.RSOD.Role.Text:lower() == "vigilante") and (char:FindFirstChild("weap_cl", true) or (player and player.Backpack:FindFirstChild("weap_cl", true)) or false) or false)]];
         end;
         return true;
     end;
