@@ -9,7 +9,7 @@ local SG = loadstring(game:HttpGet("https://raw.githubusercontent.com/sneekygoob
 if not (hookfunction and require and run_on_actor) then
     local err = executor .. " is missing " .. (not hookfunction and "hookfunction " or "") .. (not require and "require " or "") .. (not run_on_actor and "run_on_actor" or "");
     SG["error"](err);
-    return error(err);
+    return; --error(err);
 end;
 
 if not (setthreadidentity and setidentity) then SG["info"]("You may experience issues because you do not have setthreadidentity/setidentity! If you do, it's best to switch executors."); end;
@@ -23,7 +23,7 @@ local bf = workspace:FindFirstChild("BloodFolder");
 if not (npc and bf) then
     local err = "Script needs updating";
     SG["error"](err);
-    return warn(err);
+    return; --warn(err);
 end;
 
 local payload = [[
@@ -46,10 +46,10 @@ local getTarget = loadstring(game:HttpGet("https://raw.githubusercontent.com/sne
 
 local s, rep = pcall(require, RS.gun_res.lib.replicator);
 if not s then
-    return warn(executor .. " returned an error while trying to require RS.gun_res.lib.replicator:\n" .. rep);
+    return; --warn(executor .. " returned an error while trying to require RS.gun_res.lib.replicator:\n" .. rep);
 end;
 
-print("Loaded", rawget(rep, "bullet"));
+--print("Loaded", rawget(rep, "bullet"));
 
 local old; old = clonefunction(hookfunction(rawget(rep, "bullet"), newcclosure(function(_, __, ___, ____, origin, endPoses, ...)
     local c = getTarget(origin);
@@ -72,20 +72,20 @@ local cache = {};
 local setup = function(char: Model)
     task.wait();
     local gun = char:FindFirstChildOfClass("Tool");
-    if not gun then return warn("Failed to find gun"); end;
+    if not gun then return; --[[warn("Failed to find gun");]] end;
     local a: Actor = gun.Actor;
     if get_actors then
         local found = false;
         for _, v: Actor in next, get_actors() do
             if v == a then
                 found = true;
-                if not cache[a] then print("Active actor found via get_actors!"); end;
+                --if not cache[a] then print("Active actor found via get_actors!"); end;
                 break;
             end;
         end;
-        if not found then return warn("Couldn't find active actor!"); end;
+        if not found then return; --[[warn("Couldn't find active actor!");]] end;
     else
-        if not cache[a] then print("Active actor found via search index!"); end;
+        --if not cache[a] then print("Active actor found via search index!"); end;
     end;
     if not a then return warn("Failed to find actor!"); end;
     if not cache[a] then
@@ -96,7 +96,7 @@ local setup = function(char: Model)
             
             while retries < max do
                 if not a.Parent or not a:IsDescendantOf(char) then
-                    return warn("Payload injection interrupted", a:GetFullName());
+                    return; --warn("Payload injection interrupted", a:GetFullName());
                 end;
 
                 local s, err = pcall(run_on_actor, a, payload);
@@ -111,7 +111,7 @@ local setup = function(char: Model)
             end;
             
             if not cache[a] and retries >= max then
-                warn("Failed to inject payload to", a:GetFullName());
+                --warn("Failed to inject payload to", a:GetFullName());
             end;
         end);
     end
